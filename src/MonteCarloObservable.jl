@@ -94,36 +94,6 @@ module MonteCarloObservable
         h5file["$(grp_prefix)/curr_bin"] = mco.curr_bin
     end
 
-    # function write_scalar_datasets{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
-    #     grp_prefix = "simulation/results/$(mco.name)"
-    #
-    #     timeseries_size = ((1024, ), (-1, ))
-    #     buffer_size = ((1024, ), (-1, ))
-    #     chunk_size = (256,)
-    #
-    #     if exists(h5file, "$(grp_prefix)/measurement_buffer")
-    #         println("Resizing ", (size(mco.measurement_buffer, 1), ))
-    #
-    #         set_dims!(h5file["$(grp_prefix)/measurement_buffer"], (size(mco.measurement_buffer, 1), ))
-    #         h5file["$(grp_prefix)/measurement_buffer"][:] = mco.measurement_buffer[:]
-    #         h5file["$(grp_prefix)/bins"][:] = mco.bins[:]
-    #
-    #         if size(mco.timeseries, 1) > 1
-    #             set_dims!(h5file["$(grp_prefix)/timeseries"], (size(mco.timeseries, 1), 1))
-    #             h5file["$(grp_prefix)/timeseries"][:] = mco.timeseries[:]
-    #         end
-    #     else
-    #         m_set = d_create(h5file, "$(grp_prefix)/measurement_buffer", T, ((size(mco.measurement_buffer, 1),), (-1,)), "chunk", chunk_size)
-    #         m_set[:] = mco.measurement_buffer[:]
-    #         h5file["$(grp_prefix)/bins"] = mco.bins
-    #
-    #         if size(mco.timeseries, 1) > 1
-    #             t_set = d_create(h5file, "$(grp_prefix)/timeseries", T, ((size(mco.timeseries, 1),), (-1,)), "chunk", chunk_size)
-    #             t_set[:] = mco.timeseries[:]
-    #         end
-    #     end
-    # end
-
     function write_datasets{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
         colons = [Colon() for _ in mco.entry_dims]
         grp_prefix = "simulation/results/$(mco.name)"
