@@ -1,8 +1,13 @@
 using Distributions
-Pkg.clone("https://www.github.com/pebroecker/MonteCarloObservable")
+try
+    Pkg.clone("https://www.github.com/pebroecker/MonteCarloObservable")
+catch
+    Pkg.update("MonteCarloObservable")
+end
+
 using MonteCarloObservable
 
-mco = MonteCarloObservable.monte_carlo_observable{Float64}("Scalar")
+mco = monte_carlo_observable{Float64}("Scalar")
 mco.keep_timeseries = true
 
 rayleigh(x, sigma=1.0) = x / sigma^2 .* exp(-x.^2 / (2 * sigma^2))

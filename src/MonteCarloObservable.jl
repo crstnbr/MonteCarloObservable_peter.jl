@@ -6,7 +6,7 @@ module MonteCarloObservable
     include("ObservableStatistics.jl")
     include("ObservableIO.jl")
 
-    export MonteCarloObservable
+    export monte_carlo_observable
     export integrated_autocorrelation_time
     export binning_error
     export jackknife_error
