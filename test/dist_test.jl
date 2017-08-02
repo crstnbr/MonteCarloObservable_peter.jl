@@ -1,3 +1,4 @@
+using HDF5
 using Distributions
 try
     Pkg.clone("https://www.github.com/pebroecker/MonteCarloObservable")
@@ -34,3 +35,7 @@ println("Mean of x: $(mean(mco))")
 println("Variance of x: $(var(mco))")
 println("Binning error of x $(binning_error(mco))")
 println("Jackknife error of x $(jackknife_error(mco))")
+
+h = h5open("dist_test.h5", "w")
+write(h, mco)
+close(h)
