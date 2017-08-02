@@ -87,7 +87,7 @@ end
 
 
 function binning_error{T}(mco::monte_carlo_observable{T})
-    return 1./(mco.curr_bin - 1) * var(cat(mco.last_dim, mco.bins[mco.colons..., 1:(mco.curr_bin - 1)]...), mco.last_dim)
+    return 1./(mco.curr_bin - 1) * var(mco.bins[mco.colons..., 1:(mco.curr_bin - 1)], mco.last_dim)
 end
 
 
