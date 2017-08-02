@@ -1,7 +1,7 @@
 using StatsBase
 
 function Base.mean{T}(mco::monte_carlo_observable{T})
-    return mean(cat(mco.last_dim, mco.bins[mco.colons..., 1:(mco.curr_bin - 1)]...), mco.last_dim)
+    return mean(mco.bins[mco.colons..., 1:(mco.curr_bin - 1)], mco.last_dim)
 end
 
 ###################################################
@@ -96,12 +96,12 @@ end
 ###################################################
 
 @inline function jackknife_block{T}(k, mco::monte_carlo_observable{T})
-    return mean(cat(mco.last_dim, mco.bins[mco.colons..., collect([1:k; (k + 2):(mco.curr_bin - 1)])]...), mco.last_dim)
+    return mean(mco.bins[mco.colons..., collect([1:k; (k + 2):(mco.curr_bin - 1)])], mco.last_dim)
 end
 
 
 @inline function jackknife_blocks{T}(f::Function, k, mcos::Array{monte_carlo_observable{T}, 1})
-    blocks = [cat(mco.last_dim, mco.bins[mco.colons..., collect([1:k; (k + 2):(mco.curr_bin - 1)])]...) for mco in mcos]
+    blocks = [mco.bins[mco.colons..., collect([1:k; (k + 2):(mco.curr_bin - 1)])] for mco in mcos]
     return mean(f(blocks...), mcos[1].last_dim)
 end
 
