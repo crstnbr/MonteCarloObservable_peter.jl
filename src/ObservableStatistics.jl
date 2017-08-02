@@ -102,7 +102,6 @@ end
 
 @inline function jackknife_blocks{T}(f::Function, k, mcos::Array{monte_carlo_observable{T}, 1})
     blocks = [cat(mco.last_dim, mco.bins[mco.colons..., collect([1:k; (k + 2):(mco.curr_bin - 1)])]...) for mco in mcos]
-    # return f([mean(b, mcos[1].last_dim) for b in blocks]...)
     return mean(f(blocks...), mcos[1].last_dim)
 end
 

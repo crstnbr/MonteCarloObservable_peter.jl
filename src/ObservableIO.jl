@@ -52,8 +52,6 @@ function Base.push!{T}(mco::monte_carlo_observable{T}, measurement::Array{T}, ve
             if verbose println("Starting refill at $(mco.curr_bin)" ) end
             mco.bins[colons..., mco.curr_bin:end] = typemin(T)
 
-            println(binning_error(mco))
-
             mco.measurement_buffer = typemin(T) * ones(mco.entry_dims..., 2 * buffer_size)
             if verbose println("New buffer size $(size(mco.measurement_buffer)[end])" ) end
         else
@@ -124,7 +122,6 @@ function HDF5.read!{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
         mco.measurement_buffer = read(h5file, "$(grp_prefix)/measurement_buffer")
         mco.bins = read(h5file, "$(grp_prefix)/bins")
         mco.curr_bin = read(h5file, "$(grp_prefix)/curr_bin")
-        println("curr bin after loading is $(mco.curr_bin)")
         mco.autocorrelation_buffer = read(h5file, "$(grp_prefix)/autocorrelation_buffer")
     end
 end
