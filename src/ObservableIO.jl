@@ -99,15 +99,19 @@ function write_datasets{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
         h5file["$(grp_prefix)/measurement_buffer"][colons..., 1:size(mco.measurement_buffer)[end]] = mco.measurement_buffer
         h5file["$(grp_prefix)/bins"][colons..., :] = mco.bins
         h5file["$(grp_prefix)/autocorrelation_buffer"][colons..., :] = mco.autocorrelation_buffer
-        set_dims!(h5file["$(grp_prefix)/timeseries"], size(mco.timeseries))
-        h5file["$(grp_prefix)/timeseries"][colons..., 1:size(mco.timeseries)[end]]  = mco.timeseries[:]
+        if mco.keep_timeseries == true
+            set_dims!(h5file["$(grp_prefixa)/timeseries"], size(mco.timeseries))
+            h5file["$(grp_prefix)/timeseries"][colons..., 1:size(mco.timeseries)[end]]  = mco.timeseries[:]
+        end
     else
         m_set = d_create(h5file, "$(grp_prefix)/measurement_buffer", T, buffer_size, "chunk", chunk_size)
         m_set[colons..., 1:size(mco.measurement_buffer)[end]] = mco.measurement_buffer
         h5file["$(grp_prefix)/bins"] = mco.bins
         h5file["$(grp_prefix)/autocorrelation_buffer"] = mco.autocorrelation_buffer
-        t_set = d_create(h5file, "$(grp_prefix)/timeseries", T, timeseries_size, "chunk", chunk_size)
-        t_set[colons..., 1:size(mco.timeseries)[end]]  = mco.timeseries
+        if mco.keep_timeseries == true
+            t_set = d_create(h5file, "$(grp_prefix)/timeseries", T, timeseries_size, "chunk", chunk_size)
+            t_set[colons..., 1:size(mco.timeseries)[end]]  = mco.timeseries
+        end
     end
 end
 
@@ -118,7 +122,9 @@ function HDF5.read!{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
         println("Reading")
         mco.n_measurements = read(h5file, "$(grp_prefix)/n_measurements")
         mco.keep_timeseries = read(h5file, "$(grp_prefix)/keep_timeseries")
-        mco.timeseries = read(h5file, "$(grp_prefix)/timeseries")
+        if mco.keep_timeseries == true
+            mco.timeseries = read(h5file, "$(grp_prefix)/timeseries")
+        end
         mco.measurement_buffer = read(h5file, "$(grp_prefix)/measurement_buffer")
         mco.bins = read(h5file, "$(grp_prefix)/bins")
         mco.curr_bin = read(h5file, "$(grp_prefix)/curr_bin")
