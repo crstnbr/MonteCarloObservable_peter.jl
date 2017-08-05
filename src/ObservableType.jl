@@ -1,4 +1,5 @@
-DataFile = Union{HDF5::HDF5File, JLD::JLDFile}
+DataFile = Union{HDF5.HDF5File, JLD.JLDFile}
+
 type monte_carlo_observable{T}
     name::String
     n_measurements::Int
