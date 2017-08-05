@@ -1,6 +1,6 @@
 module MonteCarloObservable
 
-    using HDF5
+    using HDF5, JLD
 
     include("ObservableType.jl")
     include("ObservableStatistics.jl")
