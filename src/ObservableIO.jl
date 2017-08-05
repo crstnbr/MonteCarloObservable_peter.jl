@@ -62,7 +62,7 @@ function Base.push!{T}(mco::monte_carlo_observable{T}, measurement::Array{T}, ve
     mco.n_measurements += 1
 end
 
-function write{T}(h5file::DataFile, mco::monte_carlo_observable{T})
+function HDF5.write{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     write_parameters(h5file, mco)
     write_datasets(h5file, mco)
 end
@@ -115,7 +115,7 @@ function write_datasets{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     end
 end
 
-function read!{T}(h5file::DataFile, mco::monte_carlo_observable{T})
+function Base.read!{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     grp_prefix = "simulation/results/$(mco.name)"
 
     if exists(h5file, grp_prefix)
