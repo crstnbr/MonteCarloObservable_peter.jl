@@ -62,12 +62,12 @@ function Base.push!{T}(mco::monte_carlo_observable{T}, measurement::Array{T}, ve
     mco.n_measurements += 1
 end
 
-function HDF5.write{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
+function write{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     write_parameters(h5file, mco)
     write_datasets(h5file, mco)
 end
 
-function write_parameters{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
+function write_parameters{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     grp_prefix = "simulation/results/$(mco.name)"
 
     if exists(h5file, grp_prefix)
@@ -87,7 +87,7 @@ function write_parameters{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
 
 end
 
-function write_datasets{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
+function write_datasets{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     colons = [Colon() for _ in mco.entry_dims]
     grp_prefix = "simulation/results/$(mco.name)"
     timeseries_size = (size(mco.timeseries), (mco.entry_dims..., -1))
@@ -115,7 +115,7 @@ function write_datasets{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
     end
 end
 
-function HDF5.read!{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
+function read!{T}(h5file::DataFile, mco::monte_carlo_observable{T})
     grp_prefix = "simulation/results/$(mco.name)"
 
     if exists(h5file, grp_prefix)
