@@ -119,7 +119,6 @@ function Base.read!{T}(h5file::HDF5File, mco::monte_carlo_observable{T})
     grp_prefix = "simulation/results/$(mco.name)"
 
     if exists(h5file, grp_prefix)
-        println("Reading")
         mco.n_measurements = read(h5file, "$(grp_prefix)/n_measurements")
         mco.keep_timeseries = read(h5file, "$(grp_prefix)/keep_timeseries")
         if mco.keep_timeseries == true
