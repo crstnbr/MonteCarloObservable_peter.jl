@@ -82,7 +82,7 @@ function binning_error{T}(t::Array{T}, bin_size=-1)
     colons = [Colon() for _ in 1:t_dims - 1]
     rnge = collect(1:bin_size)
     bin_array = cat(t_dims, [squeeze(mean(t[colons..., (i - 1) * bin_size + rnge], t_dims), t_dims) for i in 1:N_bins]...)
-    return 1./(N_bins - 1) * var(bin_array, t_dims)
+    return 1./N_bins * var(bin_array, t_dims)
 end
 
 

@@ -1,10 +1,10 @@
 using HDF5
 using Distributions
-try
-    Pkg.clone("https://www.github.com/pebroecker/MonteCarloObservable")
-catch
+# try
+#     Pkg.clone("https://www.github.com/pebroecker/MonteCarloObservable")
+# catch
     Pkg.update("MonteCarloObservable")
-end
+# end
 
 using MonteCarloObservable
 
