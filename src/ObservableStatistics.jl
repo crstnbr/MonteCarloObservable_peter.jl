@@ -72,8 +72,8 @@ function binning_error{T}(t::Array{T}, bin_size=-1)
     N_bins = 1
 
     if bin_size == -1
-        bin_size = 2^Int(ceil(0.5 * log2(length(t))))
-        N_bins = 2^Int(floor(0.5 * log2(length(t))))
+        bin_size = 2^Int(floor(0.5 * log2(length(t))))
+        N_bins = 2^Int(ceil(0.5 * log2(length(t))))
     else
         N_bins = Int(ceil(length(t) / bin_size))
     end
