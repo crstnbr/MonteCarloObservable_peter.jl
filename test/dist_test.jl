@@ -34,6 +34,7 @@ end
 println("Mean of x: $(mean(mco))")
 println("Variance of x: $(var(mco))")
 println("Binning error of x $(binning_error(mco))")
+println("Binning error of timeseries of x $(binning_error(mco.timeseries))")
 println("Jackknife error of x $(jackknife_error(mco))")
 
 h = h5open("dist_test.h5", "w")
