@@ -4,5 +4,7 @@ This module provides essential capabilities to deal with measurements in Monte C
 
 To install, run
 
-Pkg.clone("https://www.github.com/pebroecker/MonteCarloObservable.jl")
+```
+Pkg.clone("https://github.com/pebroecker/MonteCarloObservable.jl")
+```
 
